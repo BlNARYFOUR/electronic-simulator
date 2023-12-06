@@ -6,11 +6,15 @@ const init = () => {
     const canvas = new Canvas(document.querySelector('#canvas'));
     canvas.init();
 
-    const testMosfet = new Mosfet(canvas, new Vector(1, 3));
-    const testCable = new Cable(canvas, new Vector(3, 5), new Vector(3, 7));
+    const circuit = new Circuit(canvas);
 
-    testMosfet.draw();
-    testCable.draw();
+    circuit.addComponent(VoltageSource, 6, 2);
+    circuit.addComponent(VoltageDrain, 6, 11);
+    circuit.addComponent(Resistor, 6, 2);
+    circuit.addComponent(Mosfet, 4, 9);
+    circuit.addComponent(Cable, 6, 13, 6, 15);
+
+    circuit.draw();
 };
 
 window.addEventListener('DOMContentLoaded', init);

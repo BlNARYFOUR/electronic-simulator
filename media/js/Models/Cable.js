@@ -1,6 +1,6 @@
 'use strict';
 
-class Cable extends IDrawable {
+class Cable extends IElectricComponent, IDrawable {
     #canvas;
     #state;
     #start;
@@ -12,26 +12,14 @@ class Cable extends IDrawable {
         this.#canvas = canvas;
         this.#start = start;
         this.#end = end;
-        this.#state = State.Low();
+        this.#state = ElectricalState.Open();
     }
 
     draw() {
-        let color;
+        this.#canvas.drawLine(this.#start, this.#end, ColorHelper.getColorFromElectricalState(this.#state));
+    }
 
-        switch (this.#state.getValue()) {
-            case State.Failure().getValue():
-                color = 'rgb(127, 0, 0)';
-                break;
-            case State.Low().getValue():
-                color = 'rgb(0, 0, 0)';
-                break;
-            case State.High().getValue():
-                color = 'rgb(0, 127, 0)';
-                break;
-            default:
-                throw new Error('Unknown state.');
-        }
-
-        this.#canvas.drawLine(this.#start, this.#end, color);
+    updateInternalState(active = true) {
+        this.#state = active ? (ElectricalState.High) : ElectricalState.Low; // todo
     }
 }

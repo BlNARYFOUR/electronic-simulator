@@ -15,7 +15,7 @@ class Canvas {
         this.#drawGrid();
     }
 
-    drawLine(start, end, color = 'rgb(0, 0, 0)') {
+    drawLine(start, end, color = Color.Black()) {
         const ctx = this.#getContext();
 
         const direction = this.#getDirection(start, end);
@@ -29,7 +29,7 @@ class Canvas {
             this.getLineWidthOnGrid() / 2 * (direction.getY()),
         );
 
-        ctx.strokeStyle = color;
+        ctx.strokeStyle = color.getValue();
         ctx.lineWidth = this.#percentageToPixels(this.#getLineWidth());
         ctx.beginPath();
         ctx.moveTo(...this.#gridToPixels(start).toArray());
